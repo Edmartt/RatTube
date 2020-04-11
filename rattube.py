@@ -1,3 +1,8 @@
+#  rattube.py
+#  
+#  Copyright 2020 Sam Sepiol <sam@debian>
+#  
+
 
 from pytube import YouTube
 import time
@@ -22,9 +27,10 @@ class RatTube:
 								
 			Según el retorno boleano que se obtenga del método, ejecuta la instrucción usada en dicha
 			plataforma para limpiar la consola'''	
-						
-	
-	def mostrarBanner(self):
+			
+
+
+	def mostrar_Banner(self):
 		cprint(figlet_format('RatTube',font='banner3'),'yellow', 'on_blue', attrs=['bold'])
 		
 		
@@ -36,9 +42,9 @@ class RatTube:
 		formatearlo con el método figlet_format que lo convierte en ascii art y nos permite
 		elegir fuentes que contiene la biblioteca pyfiglet'''
 	
-	def limpiarMostrarBanner(self):
+	def limpiar_Mostrar_Banner(self):
 		self.limpiar_Pantalla()
-		self.mostrarBanner()
+		self.mostrar_Banner()
 		
 		'''Este método limpia la pantalla y muestra el banner.
 		Se usa llamando los dos métodos juntos porque en la mayoría de los
@@ -46,44 +52,54 @@ class RatTube:
 		limpia para dar enfoque a la tarea de descarga'''	
 
 	
-	def confirmarDescargar(self):
+	def confirmar_Descargar(self):
 			
 			#self.confirmarDescargar()		
-			url = input('\n\nIngresa a URL del video: ') #Ingresar url del video a descargar
-			ruta = input('\nEn qué ruta de tu equipo guardarás el archivo? ') #ingresar la direccion donde el video se guardara
-			video = YouTube(url) #Obtener el video de Youtube 
-			print("\n",video.title) #Mostrar el titulo del video que se descargara
+			url = input('\n\nIngresa la URL del video: ')
+			ruta = input('\nEn qué ruta de tu equipo guardarás el archivo (si no pones una ruta, se guardará en el directorio del script)? ')
+			video = YouTube(url) 
+			print("\n",video.title) 
 			stream = video.streams.first()
-			#file_size=stream.filesize
-			stream.download(ruta) #Descargar video en la carpeta indicada
+			stream.download(ruta)
 			print('El video ha sido descargado en ', ruta) 
 			tecla=input("\nPresione cualquier tecla para terminar")
 			time.sleep(3)
 			print("\n\nAdiós")
 			
+			'''Este método hace uso de la biblioteca pytube,de la clase Youtube y sus métodos.
+			
+			Permite realizar la descarga del video, pideo una url y la ruta de guardado
+			por defecto se guarda en la carpeta donde esté el script'''
 			
 			
 			
 	def descargar(self):
-		self.limpiarMostrarBanner()
+		self.limpiar_Mostrar_Banner()
 		print("""\n\n1. Ingresar URL del video
 2. Volver""")
 		opcion=input("\nElija una opción: ")
 		
 		if opcion=="1":
-			self.confirmarDescargar()
-			
-		
+			self.confirmar_Descargar()
 		else:
-			self.limpiarMostrarBanner()
+			self.limpiar_Mostrar_Banner()
 			self.mostrar_Menu(self.descargar,self.salir)	
+			
+		'''Este método es para confirmar que si deseamos introducir la url del video.
 		
-	
+		Si no nos hemos equivocado, confirmaremos que pondremos la url, en caso que no
+		podremos dar en volver, ejecutando el método limpiar_Mostrar_Banner
+		y llamando al menú inicial nuevamente'''
+		
 	def salir(self):
 		self.limpiar_Pantalla()
 		sys.exit()
 		
+	'''Si elegimos salir en el menu, se ejecuta este método.
+	
+	Nos permite terminar la ejecución del script sin interrumpir con el teclado'''	
 		
+
 
 	def mostrar_Menu(self,descargar,salir):
 		print("""\n1. Descargar video de Youtube 
@@ -98,15 +114,19 @@ class RatTube:
 		while choice not in opciones:
 			print("\nNo se reconoce la opción")
 			time.sleep(5)
-			self.limpiarMostrarBanner()
+			self.limpiar_Mostrar_Banner()
 			self.mostrar_Menu(self.descargar,self.salir)
 			
 		else:
 			eleccion=opciones[choice]()		
-				
+			
+	'''Muestra el menú inicial.
+	
+	Llama desde aquí a los métodos necesarios para ejecutar las acciones
+	de descarga o de salida del script'''			
 		
 		
 rata=RatTube()
 rata.limpiar_Pantalla()
-rata.mostrarBanner()
+rata.mostrar_Banner()
 rata.mostrar_Menu(rata.descargar,rata.salir)
