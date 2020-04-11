@@ -8,23 +8,42 @@ init(strip=not sys.stdout.isatty())
 from termcolor import cprint
 from pyfiglet import figlet_format
 
+
+
 class RatTube:
 
-	def comprobarSistema(self):
-		if name=="nt":
-			_=system('cls')
-		else:
-			_=system('clear')			
-	
 	def limpiar_Pantalla(self):
-		self.comprobarSistema()
+		if name=="nt":
+			_=system('cls')	
+		else:
+			_=system('clear')
+			
+		''' Con este método comprobamos si la plataforma es NT (Windows) o si es Linux.
+								
+			Según el retorno boleano que se obtenga del método, ejecuta la instrucción usada en dicha
+			plataforma para limpiar la consola'''	
+						
 	
 	def mostrarBanner(self):
 		cprint(figlet_format('RatTube',font='banner3'),'yellow', 'on_blue', attrs=['bold'])
+		
+		
+		'''Imprime el banner que se muestra en pantalla.
+		
+		el método cprint recibe parámetros texto,color del texto y fondo que tendrá el texto,
+		attrs hace referencia a la fuente que sería en negrita
+		el texto que recibe el método cprint es lo que se obtiene de
+		formatearlo con el método figlet_format que lo convierte en ascii art y nos permite
+		elegir fuentes que contiene la biblioteca pyfiglet'''
 	
 	def limpiarMostrarBanner(self):
 		self.limpiar_Pantalla()
-		self.mostrarBanner()	
+		self.mostrarBanner()
+		
+		'''Este método limpia la pantalla y muestra el banner.
+		Se usa llamando los dos métodos juntos porque en la mayoría de los
+		llamados se necesita que el banner siga ejecutándose manteniendo la pantalla
+		limpia para dar enfoque a la tarea de descarga'''	
 
 	
 	def confirmarDescargar(self):
@@ -41,6 +60,8 @@ class RatTube:
 			tecla=input("\nPresione cualquier tecla para terminar")
 			time.sleep(3)
 			print("\n\nAdiós")
+			
+			
 			
 			
 	def descargar(self):
